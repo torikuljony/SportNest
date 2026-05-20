@@ -117,7 +117,7 @@ export default function Navbar() {
       path: "/",
     },
     {
-      name: "All Facilities",
+      name: "Explore",
       path: "/explore",
     },
   ];

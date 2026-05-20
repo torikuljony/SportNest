@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 const sportsData = [
   {
     id: 1,
@@ -5,20 +9,20 @@ const sportsData = [
     location: "Central Park, New York",
     price: "$45",
     rating: "4.9",
-    category: "Premium",
-    image:
-     "/image.2.png" 
+    category: "Tennis",
+    image: "/image.2.png",
   },
+
   {
     id: 2,
     title: "Apex Basketball Arena",
     location: "Downtown Brooklyn, NY",
     price: "$60",
     rating: "4.7",
-    category: "Indoor",
-    image:
-     "/image.3.png" 
+    category: "Basketball",
+    image: "/image.3.png",
   },
+
   {
     id: 3,
     title: "Aquatic Center Elite",
@@ -26,35 +30,116 @@ const sportsData = [
     price: "$30",
     rating: "4.8",
     category: "Swimming",
-    image:
-      "/image.4.png" 
+    image: "/image.4.png",
+  },
+
+  {
+    id: 4,
+    title: "Elite Football Turf",
+    location: "Los Angeles, CA",
+    price: "$55",
+    rating: "4.9",
+    category: "Football",
+    image: "/football1.jpg",
+  },
+
+  {
+    id: 5,
+    title: "Padel Masters Club",
+    location: "Miami, FL",
+    price: "$40",
+    rating: "4.6",
+    category: "Padel",
+    image: "/padel1.jpg",
+  },
+
+  {
+    id: 6,
+    title: "Royal Tennis Arena",
+    location: "Chicago, IL",
+    price: "$50",
+    rating: "4.8",
+    category: "Tennis",
+    image: "/tennis2.jpg",
+  },
+
+  {
+    id: 7,
+    title: "Street Basketball Hub",
+    location: "Houston, TX",
+    price: "$35",
+    rating: "4.5",
+    category: "Basketball",
+    image: "/basketball2.jpg",
+  },
+
+  {
+    id: 8,
+    title: "Champions Football Ground",
+    location: "Dallas, TX",
+    price: "$70",
+    rating: "5.0",
+    category: "Football",
+    image: "/football2.jpg",
+  },
+
+  {
+    id: 9,
+    title: "Blue Wave Swimming Pool",
+    location: "Seattle, WA",
+    price: "$28",
+    rating: "4.7",
+    category: "Swimming",
+    image: "/swimming2.jpg",
   },
 ];
 
 export default function PopularSports() {
+
+  const [activeCategory, setActiveCategory] =
+    useState("All Sports");
+
+  const categories = [
+    "All Sports",
+    "Tennis",
+    "Basketball",
+    "Football",
+    "Padel",
+    "Swimming",
+  ];
+
+  const filteredSports =
+    activeCategory === "All Sports"
+      ? sportsData
+      : sportsData.filter(
+          (sport) =>
+            sport.category === activeCategory
+        );
+
   return (
     <section className="bg-[#050505] py-20 px-6 lg:px-14">
+
       <div className="max-w-7xl mx-auto">
+
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
+
           <h2 className="text-white text-[38px] font-bold tracking-[-1px]">
             Popular Sports
           </h2>
 
           {/* Filter Buttons */}
           <div className="flex flex-wrap gap-3">
-            {[
-              "All Sports",
-              "Tennis",
-              "Basketball",
-              "Football",
-              "Padel",
-              "Swimming",
-            ].map((item, index) => (
+
+            {categories.map((item, index) => (
+
               <button
                 key={index}
+                onClick={() =>
+                  setActiveCategory(item)
+                }
                 className={`px-5 py-2 rounded-full text-sm border transition-all duration-300 ${
-                  index === 0
+                  activeCategory === item
                     ? "bg-[#0F1F0F] border-[#39FF14] text-[#39FF14]"
                     : "bg-[#151515] border-[#2A2A2A] text-gray-300 hover:border-[#39FF14] hover:text-[#39FF14]"
                 }`}
@@ -67,13 +152,17 @@ export default function PopularSports() {
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-          {sportsData.map((sport) => (
+
+          {filteredSports.map((sport) => (
+
             <div
               key={sport.id}
               className="rounded-[22px] overflow-hidden border border-[#16233D] bg-[#071120] group"
             >
+
               {/* Image */}
               <div className="relative h-[250px] overflow-hidden">
+
                 <img
                   src={sport.image}
                   alt={sport.title}
@@ -85,6 +174,7 @@ export default function PopularSports() {
 
                 {/* Badge */}
                 <div className="absolute top-4 left-4">
+
                   <span className="bg-[#39FF14] text-black text-[11px] font-semibold px-3 py-[6px] rounded-full">
                     {sport.category}
                   </span>
@@ -93,9 +183,12 @@ export default function PopularSports() {
 
               {/* Content */}
               <div className="p-5">
+
                 {/* Top */}
                 <div className="flex items-start justify-between mb-3">
+
                   <div>
+
                     <h3 className="text-white text-[31px] leading-[38px] font-semibold">
                       {sport.title}
                     </h3>
@@ -116,13 +209,16 @@ export default function PopularSports() {
 
                 {/* Bottom */}
                 <div className="flex items-center justify-between">
+
                   <div>
+
                     <p className="text-[#6B7280] text-[10px] uppercase tracking-[1px] mb-1">
                       Starting From
                     </p>
 
                     <h4 className="text-[#39FF14] text-[34px] font-bold leading-none">
                       {sport.price}
+
                       <span className="text-gray-400 text-base font-medium">
                         /hr
                       </span>

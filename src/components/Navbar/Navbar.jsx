@@ -13,6 +13,8 @@ import {
 
 import Link from "next/link";
 
+import Image from "next/image";
+
 import {
   usePathname,
   useRouter,
@@ -141,7 +143,18 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/">
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+        >
+          <Image
+            src="/logo.png"
+            alt="SportNest Logo"
+            width={45}
+            height={45}
+            className="object-contain"
+          />
+
           <h1 className="text-2xl font-black text-[#00FF29] cursor-pointer">
             SportNest
           </h1>

@@ -560,8 +560,199 @@ export default function ManageFacilitiesPage() {
 
                 </div>
               </div>
+
+              
+
             </div>
           )}
+
+                                    {/* Bottom Cards */}
+
+<div className="max-w-5xl mx-auto grid lg:grid-cols-[70%_35%] gap-8 items-start">
+
+  {/* Booking Density */}
+  <div className="relative overflow-hidden rounded-[32px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8 h-fit">
+
+    {/* Glow */}
+    <div className="absolute -top-20 left-0 w-[220px] h-[220px] bg-[#39FF14]/10 blur-[120px]" />
+
+    <div className="absolute bottom-0 right-0 w-[220px] h-[220px] bg-[#39FF14]/10 blur-[120px]" />
+
+    {/* Header */}
+    <div className="relative z-10 flex items-center justify-between mb-10">
+
+      <div>
+
+        <h2 className="text-white text-3xl font-black mb-2">
+          Booking Density
+        </h2>
+
+        <p className="text-gray-500 text-sm">
+          Weekly performance overview
+        </p>
+
+      </div>
+
+      <div className="bg-[#39FF14]/10 border border-[#39FF14]/20 text-[#39FF14] px-4 py-2 rounded-full text-sm font-bold">
+        +24%
+      </div>
+    </div>
+
+    {/* Chart */}
+    <div className="relative z-10">
+
+      {/* Top Numbers */}
+      <div className="flex justify-between text-gray-600 text-xs mb-5 px-1">
+        <span>100%</span>
+        <span>80%</span>
+        <span>60%</span>
+        <span>40%</span>
+      </div>
+
+      {/* Graph Area */}
+      <div className="relative h-[240px] bg-[#0F0F0F]/70 border border-[#1F2937] rounded-[24px] p-6 overflow-hidden">
+
+        {/* Grid */}
+        <div className="absolute inset-0 flex flex-col justify-between p-6">
+
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="border-t border-[#1F2937]"
+            />
+          ))}
+        </div>
+
+        {/* Neon Line */}
+        <svg
+          viewBox="0 0 600 240"
+          className="absolute inset-0 w-full h-full"
+          fill="none"
+        >
+
+          <defs>
+
+            <linearGradient
+              id="greenLine"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+
+              <stop
+                offset="0%"
+                stopColor="#39FF14"
+              />
+
+              <stop
+                offset="100%"
+                stopColor="#00FFB2"
+              />
+
+            </linearGradient>
+
+          </defs>
+
+          {/* Glow */}
+          <path
+            d="M20 180 C100 120, 150 140, 220 80 S350 40, 420 100 S520 180, 580 60"
+            stroke="url(#greenLine)"
+            strokeWidth="10"
+            strokeLinecap="round"
+            opacity="0.18"
+          />
+
+          {/* Main Line */}
+          <path
+            d="M20 180 C100 120, 150 140, 220 80 S350 40, 420 100 S520 180, 580 60"
+            stroke="url(#greenLine)"
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+
+          {/* Dots */}
+          {[
+            [20, 180],
+            [220, 80],
+            [420, 100],
+            [580, 60],
+          ].map((dot, i) => (
+
+            <circle
+              key={i}
+              cx={dot[0]}
+              cy={dot[1]}
+              r="7"
+              fill="#39FF14"
+            />
+          ))}
+
+        </svg>
+      </div>
+
+      {/* Days */}
+      <div className="flex justify-between mt-5 text-gray-500 text-sm px-2">
+
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+        <span>Sun</span>
+
+      </div>
+    </div>
+  </div>
+
+  {/* Live Feed */}
+  <div className="relative overflow-hidden rounded-[32px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8 h-fit">
+
+    <div className="absolute top-0 right-0 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
+
+    <h2 className="text-white text-3xl font-black mb-10 relative z-10">
+      Live Feed
+    </h2>
+
+    <div className="space-y-8 relative z-10">
+
+      {[
+        "New booking at Elite padel",
+        "Review received: 5 stars",
+        "Maintenance Alert",
+        "Payment Settled: $1,240",
+      ].map((item, i) => (
+
+        <div
+          key={i}
+          className="flex gap-4"
+        >
+
+          <div className="w-3 h-3 rounded-full bg-[#39FF14] mt-2 shadow-[0_0_10px_#39FF14]" />
+
+          <div>
+
+            <h4 className="text-white font-semibold">
+              {item}
+            </h4>
+
+            <p className="text-gray-500 text-sm mt-1">
+              2 minutes ago
+            </p>
+
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <button className="mt-12 text-[#39FF14] font-bold">
+      View Audit Log →
+    </button>
+
+   </div>
+    </div>
+
         </section>
 
         <Footer />

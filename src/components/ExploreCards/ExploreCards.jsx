@@ -26,7 +26,7 @@ export default function ExploreCards() {
       price: "$45",
       rating: "4.9",
       image:
-        "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?q=80&w=1200&auto=format&fit=crop",
+        "/image.24.png",
     },
 
     {
@@ -37,7 +37,7 @@ export default function ExploreCards() {
       price: "$35",
       rating: "4.8",
       image:
-        "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=1200&auto=format&fit=crop",
+        "/image.11.png",
     },
 
     {
@@ -48,7 +48,7 @@ export default function ExploreCards() {
       price: "$60",
       rating: "5.0",
       image:
-        "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1200&auto=format&fit=crop",
+        "/image.12.png",
     },
 
     {
@@ -59,7 +59,7 @@ export default function ExploreCards() {
       price: "$20",
       rating: "4.7",
       image:
-        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop",
+        "/image.13.png",
     },
 
     {
@@ -70,7 +70,7 @@ export default function ExploreCards() {
       price: "$40",
       rating: "4.6",
       image:
-        "https://images.unsplash.com/photo-1626248801379-51a0748a5f96?q=80&w=1200&auto=format&fit=crop",
+        "/image.22.png",
     },
 
     {
@@ -81,7 +81,7 @@ export default function ExploreCards() {
       price: "$25",
       rating: "4.9",
       image:
-        "https://images.unsplash.com/photo-1519315901367-f34ff9154487?q=80&w=1200&auto=format&fit=crop",
+        "/image.14.png",
     },
 
     {
@@ -92,7 +92,7 @@ export default function ExploreCards() {
       price: "$50",
       rating: "4.8",
       image:
-        "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?q=80&w=1200&auto=format&fit=crop",
+       "/image.4.png",
     },
 
     {
@@ -103,7 +103,7 @@ export default function ExploreCards() {
       price: "$15",
       rating: "4.5",
       image:
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop",
+        "/image.23.png",
     },
 
     // NEW CARDS
@@ -116,7 +116,7 @@ export default function ExploreCards() {
       price: "$70",
       rating: "5.0",
       image:
-        "https://images.unsplash.com/photo-1486286701208-1d58e9338013?q=80&w=1200&auto=format&fit=crop",
+        "/image.7.png",
     },
 
     {
@@ -127,7 +127,7 @@ export default function ExploreCards() {
       price: "$38",
       rating: "4.8",
       image:
-        "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200&auto=format&fit=crop",
+        "/image.10.png",
     },
 
     {
@@ -138,7 +138,7 @@ export default function ExploreCards() {
       price: "$28",
       rating: "4.7",
       image:
-        "https://images.unsplash.com/photo-1576013551627-0b744bca024d?q=80&w=1200&auto=format&fit=crop",
+        "/image.6.png",
     },
 
     {
@@ -149,9 +149,8 @@ export default function ExploreCards() {
       price: "$55",
       rating: "4.9",
       image:
-        "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=1200&auto=format&fit=crop",
+        "/image.16.png",
     },
-
     {
       id: 13,
       category: "GYM",
@@ -160,7 +159,8 @@ export default function ExploreCards() {
       price: "$18",
       rating: "4.6",
       image:
-        "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1200&auto=format&fit=crop",
+        "/image.17.png",
+
     },
 
     {
@@ -171,7 +171,7 @@ export default function ExploreCards() {
       price: "$48",
       rating: "4.9",
       image:
-        "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=1200&auto=format&fit=crop",
+        "/image.18.png",
     },
 
     {
@@ -182,7 +182,7 @@ export default function ExploreCards() {
       price: "$65",
       rating: "4.9",
       image:
-        "https://images.unsplash.com/photo-1552667466-07770ae110d0?q=80&w=1200&auto=format&fit=crop",
+        "/image.19.png",
     },
 
     {
@@ -193,7 +193,7 @@ export default function ExploreCards() {
       price: "$42",
       rating: "4.7",
       image:
-        "https://images.unsplash.com/photo-1505666287802-931dc83a2f67?q=80&w=1200&auto=format&fit=crop",
+        "/image.20.png",
     },
   ];
 
@@ -366,13 +366,13 @@ export default function ExploreCards() {
     <div className="flex gap-6 marquee">
 
       {[
-        "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1519315901367-f34ff9154487?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1626248801379-51a0748a5f96?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1552667466-07770ae110d0?q=80&w=1400&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1400&auto=format&fit=crop",
+        "/image.1.png",
+        "/image.9.png",
+        "/image.7.png",
+        "/image.8.png",
+        "/image.6.png",
+        "/image.10.png",
+        "/image.2.png",
       ].map((img, index) => (
 
         <div

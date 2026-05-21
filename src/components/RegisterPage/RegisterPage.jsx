@@ -85,7 +85,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-black via-[#071120] to-black flex items-center justify-center px-6 py-16">
+    <section className="min-h-screen bg-linear-to-b from-black via-[#071120] to-black flex items-center justify-center px-6 py-16">
 
       <div className="w-full max-w-2xl bg-[#0B0B0B]/90 backdrop-blur-xl border border-[#1d1d1d] rounded-[32px] p-8 shadow-[0_0_60px_rgba(57,255,20,0.08)]">
 

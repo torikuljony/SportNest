@@ -377,7 +377,7 @@ export default function ExploreCards() {
 
         <div
           key={index}
-          className="min-w-[380px] h-[240px] rounded-[30px] overflow-hidden border border-[#1F2937] relative group flex-shrink-0"
+          className="min-w-[380px] h-[240px] rounded-[30px] overflow-hidden border border-[#1F2937] relative group shrink-0"
         >
 
           <img

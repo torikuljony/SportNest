@@ -165,7 +165,7 @@ export default function PopularSports() {
             >
 
               {/* Image */}
-              <div className="relative h-[250px] overflow-hidden">
+              <div className="relative h-62.5 overflow-hidden">
 
                 <img
                   src={sport.image}
@@ -179,7 +179,7 @@ export default function PopularSports() {
                 {/* Badge */}
                 <div className="absolute top-4 left-4">
 
-                  <span className="bg-[#39FF14] text-black text-[11px] font-semibold px-3 py-[6px] rounded-full">
+                  <span className="bg-[#39FF14] text-black text-[11px] font-semibold px-3 py-1.5 rounded-full">
                     {sport.category}
                   </span>
                 </div>

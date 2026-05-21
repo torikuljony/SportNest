@@ -45,7 +45,7 @@ export default function CommunitySection() {
                 on the market.
               </p>
 
-              {/* User */}
+              {/* User image */}
               <div className="flex items-center gap-4">
                 <img
                   src="/image.5.png" 

@@ -269,7 +269,7 @@ export default function ExploreCards() {
             >
 
               {/* Image */}
-              <div className="relative h-[180px] overflow-hidden">
+              <div className="relative h-45 overflow-hidden">
 
                 <img
                   src={sport.image}
@@ -343,9 +343,9 @@ export default function ExploreCards() {
 <div className="mt-28 relative overflow-hidden">
 
   {/* Background Glow */}
-  <div className="absolute left-[-100px] top-20 w-[300px] h-[300px] bg-[#39FF14]/10 blur-[140px] rounded-full"></div>
+  <div className="absolute -left-25 top-20 w-75 h-75 bg-[#39FF14]/10 blur-[140px] rounded-full"></div>
 
-  <div className="absolute right-[-100px] bottom-0 w-[300px] h-[300px] bg-[#39FF14]/10 blur-[140px] rounded-full"></div>
+  <div className="absolute -right-25 bottom-0 w-75 h-75 bg-[#39FF14]/10 blur-[140px] rounded-full"></div>
 
   {/* Heading */}
   <div className="mb-12 relative z-10">
@@ -386,7 +386,7 @@ export default function ExploreCards() {
             className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent"></div>
 
           <div className="absolute bottom-6 left-6">
             <h3 className="text-white text-2xl font-bold">

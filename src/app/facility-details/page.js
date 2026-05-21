@@ -32,7 +32,7 @@ export default function FacilityDetailsPage() {
 
   const image =
     searchParams.get("image") ||
-    "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1400&auto=format&fit=crop";
+    "/image.22.png";
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -123,14 +123,14 @@ export default function FacilityDetailsPage() {
                 <img
                   src={image}
                   alt="facility"
-                  className="w-full h-[500px] object-cover"
+                  className="w-full h-125 object-cover"
                 />
 
                 <div className="absolute top-6 left-6 bg-[#39FF14] text-black text-xs font-bold px-4 py-2 rounded-full">
                   {category}
                 </div>
 
-                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent p-8">
+                <div className="absolute bottom-0 left-0 w-full bg-linear-to-t from-black to-transparent p-8">
 
                   <h1 className="text-5xl font-bold mb-3">
                     {title}

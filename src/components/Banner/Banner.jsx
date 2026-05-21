@@ -10,9 +10,9 @@ export default function Banner() {
     <section className="bg-[#070B14] text-white min-h-screen flex items-center px-6 lg:px-20 overflow-hidden relative">
 
       {/* Glow Effects */}
-      <div className="absolute -top-25 -left-25 w-75 h-75 bg-green-500/20 blur-[140px] rounded-full"></div>
+      <div className="absolute -top-30 -left-25 w-75 h-75 bg-green-400/30 blur-[150px] rounded-full"></div>
 
-      <div className="absolute -bottom-25 -right-25 w-75 h-75 bg-blue-500/20 blur-[140px] rounded-full"></div>
+      <div className="absolute -top-30 -right-25 w-75 h-75 bg-green-400/30 blur-[150px] rounded-full"></div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center relative z-10">
 

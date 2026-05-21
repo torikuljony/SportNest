@@ -1,25 +1,36 @@
+import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
 
   try {
 
-    const client = await clientPromise;
+    const client =
+      await clientPromise;
 
-    const db = client.db("sportnestDB");
+    const db =
+      client.db("sportnestDB");
 
-    const bookingsCollection = db.collection("bookings");
+    const bookingsCollection =
+      db.collection("bookings");
 
-    const bookings = await bookingsCollection.find().toArray();
+    const bookings =
+      await bookingsCollection
+        .find({})
+        .toArray();
 
-    return Response.json({
+    return NextResponse.json({
       success: true,
       bookings,
     });
 
   } catch (error) {
 
-    return Response.json({
+    console.log(error);
+
+    return NextResponse.json({
       success: false,
       error: error.message,
     });

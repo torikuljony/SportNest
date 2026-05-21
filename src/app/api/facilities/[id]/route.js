@@ -1,41 +1,41 @@
-// import clientPromise from "@/lib/mongodb";
-// import { ObjectId } from "mongodb";
-// import { NextResponse } from "next/server";
+import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
+import { NextResponse } from "next/server";
 
-// // DELETE FACILITY
-// export async function DELETE(req, { params }) {
+// DELETE FACILITY
+export async function DELETE(req, { params }) {
 
-//   try {
+  try {
 
-//     const client = await clientPromise;
+    const client = await clientPromise;
 
-//     const db = client.db("sportnestDB");
+    const db = client.db("sportnestDB");
 
-//     const facilitiesCollection =
-//       db.collection("facilities");
+    const facilitiesCollection =
+      db.collection("facilities");
 
-//     const result =
-//       await facilitiesCollection.deleteOne({
+    const result =
+      await facilitiesCollection.deleteOne({
 
-//         _id: new ObjectId(params.id),
-//       });
+        _id: new ObjectId(params.id),
+      });
 
-//     return NextResponse.json({
+    return NextResponse.json({
 
-//       success: true,
+      success: true,
 
-//       message: "Facility Deleted Successfully",
+      message: "Facility Deleted Successfully",
 
-//       result,
-//     });
+      result,
+    });
 
-//   } catch (error) {
+  } catch (error) {
 
-//     return NextResponse.json({
+    return NextResponse.json({
 
-//       success: false,
+      success: false,
 
-//       error: error.message,
-//     });
-//   }
-// }
+      error: error.message,
+    });
+  }
+}

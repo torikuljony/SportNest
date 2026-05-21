@@ -174,7 +174,7 @@ export default function PopularSports() {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#071120] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#071120] via-transparent to-transparent" />
 
                 {/* Badge */}
                 <div className="absolute top-4 left-4">
@@ -193,7 +193,7 @@ export default function PopularSports() {
 
                   <div>
 
-                    <h3 className="text-white text-[31px] leading-[38px] font-semibold">
+                    <h3 className="text-white text-[31px] leading-9.5 font-semibold">
                       {sport.title}
                     </h3>
 

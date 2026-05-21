@@ -3,11 +3,10 @@
 import { useRouter } from "next/navigation";
 
 export default function Banner() {
-
   const router = useRouter();
 
   return (
-    <section className="bg-[#070B14] text-white min-h-screen flex items-center px-6 lg:px-20 overflow-hidden relative">
+    <section className="bg-[#070B14] text-white min-h-screen flex items-center px-6 lg:px-20 overflow-hidden relative pt-20">
 
       {/* Glow Effects */}
       <div className="absolute -top-30 -left-25 w-75 h-75 bg-green-400/30 blur-[150px] rounded-full"></div>
@@ -25,7 +24,6 @@ export default function Banner() {
 
           <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
             Unleash{" "}
-
             <span className="text-green-500 drop-shadow-[0_0_25px_rgba(#00FF29)]">
               Your Game
             </span>
@@ -42,9 +40,7 @@ export default function Banner() {
           <div className="flex flex-wrap gap-4 mt-8">
 
             <button
-              onClick={() =>
-                router.push("/explore")
-              }
+              onClick={() => router.push("/explore")}
               className="bg-green-400 hover:bg-green-500 hover:shadow-[0_0_35px_rgba(74,222,128,0.9)] hover:scale-105 text-black font-semibold px-7 py-3 rounded-full transition-all duration-300"
             >
               Explore Facilities
@@ -53,52 +49,39 @@ export default function Banner() {
             <button className="border border-gray-700 hover:border-green-400 hover:text-green-400 hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] px-7 py-3 rounded-full transition-all duration-300">
               Learn More
             </button>
+
           </div>
 
           {/* STATS */}
           <div className="flex flex-wrap gap-8 mt-12">
 
             <div>
-
               <h2 className="text-3xl font-bold text-green-400 drop-shadow-[0_0_20px_rgba(74,222,128,0.95)]">
                 500+
               </h2>
-
-              <p className="text-gray-500 mt-1">
-                Active Players
-              </p>
+              <p className="text-gray-500 mt-1">Active Players</p>
             </div>
 
             <div>
-
               <h2 className="text-3xl font-bold text-green-400 drop-shadow-[0_0_20px_rgba(74,222,128,0.95)]">
                 120+
               </h2>
-
-              <p className="text-gray-500 mt-1">
-                Sports Venues
-              </p>
+              <p className="text-gray-500 mt-1">Sports Venues</p>
             </div>
 
             <div>
-
               <h2 className="text-3xl font-bold text-green-500 drop-shadow-[0_0_20px_rgba(74,222,128,0.95)]">
                 24/7
               </h2>
-
-              <p className="text-gray-500 mt-1">
-                Instant Booking
-              </p>
+              <p className="text-gray-500 mt-1">Instant Booking</p>
             </div>
+
           </div>
         </div>
 
         {/* RIGHT IMAGE */}
         <div className="relative flex justify-center">
 
-         
-
-          {/* Main Image */}
           <img
             src="/image.es.png"
             alt="Sports Arena"
@@ -119,8 +102,11 @@ export default function Banner() {
             <p className="text-green-400 text-sm mt-1 drop-shadow-[#00FF29]">
               Available Now
             </p>
+
           </div>
+
         </div>
+
       </div>
     </section>
   );

@@ -96,14 +96,13 @@ export default function Banner() {
         {/* RIGHT IMAGE */}
         <div className="relative flex justify-center">
 
-          {/* Glow */}
-          <div className="absolute inset-0 bg-green-500/10 blur-[100px] rounded-full"></div>
+         
 
           {/* Main Image */}
           <img
-            src="/image.1.png"
+            src="/image.es.png"
             alt="Sports Arena"
-            className="w-full max-w-xl h-[500px] object-cover rounded-3xl border border-gray-800 shadow-2xl transition-all duration-500 hover:scale-105 hover:rotate-1 hover:shadow-[0_0_40px_rgba(74,222,128,0.35)]"
+            className="w-full max-w-xl h-100 object-cover rounded-3xl border border-gray-900 shadow-2xl transition-all duration-500 hover:scale-110 hover:rotate-1 hover:shadow-[0_0_40px_rgba(74,222,128)]"
           />
 
           {/* Floating Glass Card */}

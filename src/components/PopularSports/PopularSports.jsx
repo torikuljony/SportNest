@@ -42,7 +42,7 @@ const sportsData = [
     price: "$55",
     rating: "4.9",
     category: "Football",
-    image: "/football1.jpg",
+    image: "/image.7.png",
   },
 
   {
@@ -52,7 +52,7 @@ const sportsData = [
     price: "$40",
     rating: "4.6",
     category: "Padel",
-    image: "/padel1.jpg",
+    image: "/image.10.png",
   },
 
   {
@@ -62,7 +62,7 @@ const sportsData = [
     price: "$50",
     rating: "4.8",
     category: "Tennis",
-    image: "/tennis2.jpg",
+    image: "/image.25.png",
   },
 
   {
@@ -72,7 +72,7 @@ const sportsData = [
     price: "$35",
     rating: "4.5",
     category: "Basketball",
-    image: "/basketball2.jpg",
+    image: "/image.16.png",
   },
 
   {
@@ -82,7 +82,7 @@ const sportsData = [
     price: "$70",
     rating: "5.0",
     category: "Football",
-    image: "/football2.jpg",
+    image: "/image.19.png",
   },
 
   {
@@ -92,7 +92,7 @@ const sportsData = [
     price: "$28",
     rating: "4.7",
     category: "Swimming",
-    image: "/swimming2.jpg",
+    image: "/image.21.png",
   },
 ];
 

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 const sportsData = [
   {
     id: 1,
@@ -95,6 +97,8 @@ const sportsData = [
 ];
 
 export default function PopularSports() {
+
+  const router = useRouter();
 
   const [activeCategory, setActiveCategory] =
     useState("All Sports");
@@ -225,7 +229,12 @@ export default function PopularSports() {
                     </h4>
                   </div>
 
-                  <button className="bg-[#0D2B12] hover:bg-[#123918] text-[#39FF14] px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300">
+                  <button
+                    onClick={() =>
+                      router.push("/explore")
+                    }
+                    className="bg-[#0D2B12] hover:bg-[#123918] text-[#39FF14] px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300"
+                  >
                     Book Now
                   </button>
                 </div>

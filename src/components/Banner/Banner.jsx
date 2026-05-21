@@ -10,9 +10,9 @@ export default function Banner() {
     <section className="bg-[#070B14] text-white min-h-screen flex items-center px-6 lg:px-20 overflow-hidden relative">
 
       {/* Glow Effects */}
-      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] bg-green-500/20 blur-[140px] rounded-full"></div>
+      <div className="absolute -top-25 -left-25 w-75 h-75 bg-green-500/20 blur-[140px] rounded-full"></div>
 
-      <div className="absolute bottom-[-100px] right-[-100px] w-[300px] h-[300px] bg-blue-500/20 blur-[140px] rounded-full"></div>
+      <div className="absolute -bottom-25 -right-25 w-75 h-75 bg-blue-500/20 blur-[140px] rounded-full"></div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center relative z-10">
 
@@ -106,9 +106,9 @@ export default function Banner() {
           />
 
           {/* Floating Glass Card */}
-          <div className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl px-5 py-4 shadow-xl">
+          <div className="absolute bottom-5 left-5 bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl px-5 py-4 shadow-xl">
 
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-200">
               Top Rated Arena
             </p>
 
@@ -116,7 +116,7 @@ export default function Banner() {
               Elite Football Turf
             </h3>
 
-            <p className="text-green-500 text-sm mt-1 drop-shadow-[#00FF29]">
+            <p className="text-green-400 text-sm mt-1 drop-shadow-[#00FF29]">
               Available Now
             </p>
           </div>

@@ -1,519 +1,572 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+
+import { auth } from "@/firebase/firebase.config";
+
+import { onAuthStateChanged } from "firebase/auth";
 
 import {
-  FaClock,
   FaEdit,
   FaTrash,
   FaChartLine,
   FaStar,
+  FaClock,
 } from "react-icons/fa";
+
+import {
+  HiOutlineEye,
+  HiOutlineFilter,
+  HiOutlineSortDescending,
+} from "react-icons/hi";
 
 import {
   MdOutlineSportsTennis,
 } from "react-icons/md";
 
-import {
-  HiOutlineFilter,
-  HiOutlineSortDescending,
-  HiOutlineEye,
-} from "react-icons/hi";
-
 export default function ManageFacilitiesPage() {
 
-  const facilities = [
+  const [facilities, setFacilities] =
+    useState([]);
 
-    {
-      id: 1,
-      title: "Elite Padel Center",
-      location: "Downtown District, Block A",
-      image:
-        "https://images.unsplash.com/photo-1626248801379-51a0748a5f96?q=80&w=1200&auto=format&fit=crop",
-      status: "Active",
-      courts: "6 Courts",
-      time: "06:00 - 23:00",
-      bookings: "12/14",
-      button: "Analytics",
-      green: true,
-    },
+  const [loading, setLoading] =
+    useState(true);
 
-    {
-      id: 2,
-      title: "Urban Hoop Arena",
-      location: "Northside Industrial Park",
-      image:
-        "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=1200&auto=format&fit=crop",
-      status: "Draft",
-      courts: "2 Full Courts",
-      time: "Completing Profile",
-      bookings: "Oct 24",
-      button: "Go Live",
-      green: false,
-    },
+  // SEARCH
+  const [searchText, setSearchText] =
+    useState("");
 
-    {
-      id: 3,
-      title: "Victory Turf Club",
-      location: "Riverside Sports Complex",
-      image:
-        "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1200&auto=format&fit=crop",
-      status: "Maintenance",
-      courts: "5-a-side Pitch",
-      time: "Turf Resurfacing",
-      bookings: "Aug 18",
-      button: "Analytics",
-      green: true,
-    },
-  ];
+  // EDIT MODAL
+  const [editModal, setEditModal] =
+    useState(false);
+
+  const [selectedFacility, setSelectedFacility] =
+    useState(null);
+
+  const [updatedPlayers, setUpdatedPlayers] =
+    useState("");
+
+  const [updatedTime, setUpdatedTime] =
+    useState("");
+
+  // AUTH FIX
+  useEffect(() => {
+
+    const unsubscribe =
+      onAuthStateChanged(
+        auth,
+        async (user) => {
+
+          if (user) {
+
+            await fetchBookings(
+              user.email
+            );
+
+          } else {
+
+            setFacilities([]);
+            setLoading(false);
+          }
+        }
+      );
+
+    return () => unsubscribe();
+
+  }, []);
+
+  // FETCH BOOKINGS
+  const fetchBookings = async (
+    email
+  ) => {
+
+    try {
+
+      setLoading(true);
+
+      const res = await fetch(
+        "/api/bookings/all"
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+
+        const myBookings =
+          data.bookings.filter(
+            (booking) =>
+              booking.userEmail ===
+              email
+          );
+
+        setFacilities(myBookings);
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+    } finally {
+
+      setLoading(false);
+    }
+  };
+
+  // DELETE
+  const handleDelete = (id) => {
+
+    const confirmDelete = confirm(
+      "Delete this booking?"
+    );
+
+    if (!confirmDelete) return;
+
+    const remaining =
+      facilities.filter(
+        (item) =>
+          item._id !== id
+      );
+
+    setFacilities(remaining);
+  };
+
+  // OPEN EDIT
+  const handleEdit = (
+    facility
+  ) => {
+
+    setSelectedFacility(
+      facility
+    );
+
+    setUpdatedPlayers(
+      facility.players
+    );
+
+    setUpdatedTime(
+      facility.time
+    );
+
+    setEditModal(true);
+  };
+
+  // UPDATE
+  const handleUpdate = () => {
+
+    const updatedFacilities =
+      facilities.map((item) => {
+
+        if (
+          item._id ===
+          selectedFacility._id
+        ) {
+
+          return {
+            ...item,
+            players:
+              updatedPlayers,
+            time:
+              updatedTime,
+          };
+        }
+
+        return item;
+      });
+
+    setFacilities(
+      updatedFacilities
+    );
+
+    setEditModal(false);
+  };
+
+  // SEARCH FILTER
+  const filteredFacilities =
+    facilities.filter((item) =>
+
+      item.facilityName
+        ?.toLowerCase()
+        .includes(
+          searchText.toLowerCase()
+        ) ||
+
+      item.date
+        ?.toLowerCase()
+        .includes(
+          searchText.toLowerCase()
+        ) ||
+
+      item.time
+        ?.toLowerCase()
+        .includes(
+          searchText.toLowerCase()
+        )
+    );
 
   return (
-    <>
-      <Navbar />
 
-      <section className="bg-black min-h-screen px-6 lg:px-10 py-28 overflow-hidden">
+    <PrivateRoute>
 
-        <div className="max-w-7xl mx-auto">
+      <>
+        <Navbar />
 
-          {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-14">
+        <section className="bg-black min-h-screen px-6 lg:px-10 py-28 overflow-hidden">
 
-            <div>
-              <h1 className="text-[#39FF14] text-5xl font-black mb-3">
-                Manage Facilities
-              </h1>
+          <div className="max-w-7xl mx-auto">
 
-              <p className="text-gray-400 text-lg">
-                Optimization and oversight of your active venues.
-              </p>
-            </div>
+            {/* HEADER */}
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-14">
 
-            <div className="flex items-center gap-5">
+              <div>
 
-              <div className="bg-[#111111] border border-[#232323] rounded-full px-6 py-4 flex items-center gap-3 w-[320px]">
+                <h1 className="text-[#39FF14] text-5xl font-black mb-3">
+                  Manage Facilities
+                </h1>
 
-                <span className="text-gray-500">
-                  🔍
-                </span>
+                <p className="text-gray-400 text-lg">
+                  Optimization and oversight of your active venues.
+                </p>
 
-                <input
-                  type="text"
-                  placeholder="Search facilities..."
-                  className="bg-transparent outline-none text-sm text-white w-full"
-                />
               </div>
 
-            
+              <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto">
+
+                {/* SEARCH */}
+                <div className="bg-[#151515] border border-[#1F2937] rounded-full px-6 py-4 flex items-center gap-3 w-full lg:w-[320px]">
+
+                  <span className="text-gray-500">
+                    🔍
+                  </span>
+
+                  <input
+                    type="text"
+                    placeholder="Search facilities..."
+                    value={searchText}
+                    onChange={(e) =>
+                      setSearchText(e.target.value)
+                    }
+                    className="bg-transparent outline-none text-sm text-white w-full"
+                  />
+                </div>
+
+                <button className="bg-[#151515] border border-[#1F2937] px-5 py-3 rounded-xl text-white flex items-center gap-2">
+
+                  <HiOutlineFilter />
+
+                  Filter
+
+                </button>
+
+                <button className="bg-[#151515] border border-[#1F2937] px-5 py-3 rounded-xl text-white flex items-center gap-2">
+
+                  <HiOutlineSortDescending />
+
+                  Sort
+
+                </button>
+
+              </div>
             </div>
-          </div>
 
-          {/* Stats */}
-          <div className="grid md:grid-cols-3 gap-7 mb-16">
+            {/* STATS */}
+            <div className="grid md:grid-cols-3 gap-7 mb-16">
 
-            {/* Revenue */}
-            <div className="relative overflow-hidden rounded-[30px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
-
-              <div className="absolute -top-10 -left-10 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
-
-              <div className="relative z-10">
+              <div className="relative overflow-hidden rounded-[30px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
 
                 <div className="w-14 h-14 rounded-2xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center mb-8">
 
                   <FaChartLine className="text-[#39FF14] text-xl" />
+
                 </div>
 
                 <p className="text-gray-500 uppercase tracking-[2px] text-sm mb-4">
-                  Monthly Revenue
+                  Total Bookings
                 </p>
 
-                <h2 className="text-white text-6xl font-black mb-6">
-                  $42,850
+                <h2 className="text-white text-6xl font-black">
+                  {facilities.length}
                 </h2>
 
-                <div className="h-[6px] bg-[#1F2937] rounded-full overflow-hidden">
-
-                  <div className="w-[72%] h-full bg-[#39FF14]" />
-                </div>
               </div>
-            </div>
 
-            {/* Views */}
-            <div className="relative overflow-hidden rounded-[30px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
-
-              <div className="absolute -bottom-10 -right-10 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
-
-              <div className="relative z-10">
+              <div className="relative overflow-hidden rounded-[30px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
 
                 <div className="w-14 h-14 rounded-2xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center mb-8">
 
                   <HiOutlineEye className="text-[#39FF14] text-2xl" />
+
                 </div>
 
                 <p className="text-gray-500 uppercase tracking-[2px] text-sm mb-4">
-                  Profile Views
+                  Active Facilities
                 </p>
 
-                <h2 className="text-white text-6xl font-black mb-5">
-                  18.4K
+                <h2 className="text-white text-6xl font-black">
+                  {facilities.length}
                 </h2>
 
-                <p className="text-gray-400 text-sm">
-                  8.2% more than last month
-                </p>
               </div>
-            </div>
 
-            {/* Rating */}
-            <div className="relative overflow-hidden rounded-[30px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
-
-              <div className="absolute top-0 right-0 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
-
-              <div className="relative z-10">
+              <div className="relative overflow-hidden rounded-[30px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
 
                 <div className="w-14 h-14 rounded-2xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center mb-8">
 
                   <FaStar className="text-[#39FF14] text-xl" />
+
                 </div>
 
                 <p className="text-gray-500 uppercase tracking-[2px] text-sm mb-4">
-                  Avg. Member Rating
+                  Avg Rating
                 </p>
 
-                <h2 className="text-white text-6xl font-black mb-5">
+                <h2 className="text-white text-6xl font-black">
                   4.9
                 </h2>
 
-                <div className="flex gap-1 text-[#39FF14]">
-                  ★★★★★
-                </div>
               </div>
             </div>
-          </div>
 
-          {/* Top */}
-          <div className="flex items-center justify-between mb-8">
+            {/* LOADING */}
+            {loading && (
 
-            <h2 className="text-white text-4xl font-black">
-              Your Facilities
-            </h2>
+              <div className="text-center text-[#39FF14] text-2xl font-bold py-20">
+                Loading...
+              </div>
+            )}
 
-            <div className="flex items-center gap-4">
+            {/* FACILITY CARDS */}
+            {!loading && (
 
-              <button className="bg-[#151515] border border-[#1F2937] px-5 py-3 rounded-xl text-white flex items-center gap-2">
-                <HiOutlineFilter />
-                Filter
-              </button>
+              <div className="space-y-8 mb-16">
 
-              <button className="bg-[#151515] border border-[#1F2937] px-5 py-3 rounded-xl text-white flex items-center gap-2">
-                <HiOutlineSortDescending />
-                Sort
-              </button>
-            </div>
-          </div>
+                {filteredFacilities.map((item) => (
 
-          {/* Facility Cards */}
-          <div className="space-y-8 mb-16">
+                  <div
+                    key={item._id}
+                    className="relative overflow-hidden rounded-[32px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B]"
+                  >
 
-            {facilities.map((item) => (
+                    <div className="absolute -top-20 -left-20 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
 
-              <div
-                key={item.id}
-                className="relative overflow-hidden rounded-[32px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B]"
-              >
+                    <div className="absolute -bottom-20 -right-20 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
 
-                <div className="absolute -top-20 -left-20 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
+                    <div className="grid lg:grid-cols-[320px_1fr_280px]">
 
-                <div className="absolute -bottom-20 -right-20 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
+                      {/* IMAGE */}
+                      <div className="relative">
 
-                <div className="grid lg:grid-cols-[320px_1fr_280px]">
+                        <img
+                          src={item.facilityImage}
+                          alt=""
+                          className="w-full h-full min-h-[260px] object-cover"
+                        />
 
-                  {/* Image */}
-                  <div className="relative">
+                        <div className="absolute top-5 left-5">
 
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="w-full h-full min-h-[260px] object-cover"
-                    />
+                          <span className="px-4 py-2 rounded-full text-xs font-bold bg-[#39FF14] text-black">
+                            BOOKED
+                          </span>
 
-                    <div className="absolute top-5 left-5">
+                        </div>
+                      </div>
 
-                      <span
-                        className={`px-4 py-2 rounded-full text-xs font-bold ${
-                          item.status === "Active"
-                            ? "bg-[#39FF14] text-black"
-                            : item.status === "Draft"
-                            ? "bg-gray-600 text-white"
-                            : "bg-red-600 text-white"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-8 flex flex-col justify-between">
-
-                    <div>
-
-                      <div className="flex items-start justify-between gap-5 mb-6">
+                      {/* CONTENT */}
+                      <div className="p-8 flex flex-col justify-between">
 
                         <div>
 
-                          <h3 className="text-white text-4xl font-black mb-3">
-                            {item.title}
-                          </h3>
+                          <div className="flex items-start justify-between gap-5 mb-6">
 
-                          <p className="text-gray-400">
-                            ⌖ {item.location}
-                          </p>
-                        </div>
+                            <div>
 
-                        <div className="text-right">
+                              <h3 className="text-white text-4xl font-black mb-3">
+                                {item.facilityName}
+                              </h3>
 
-                          <p className="text-gray-500 text-sm uppercase mb-2">
-                            BOOKINGS TODAY
-                          </p>
+                              <p className="text-gray-400">
+                                Booking Date :
+                                {" "}
+                                {item.date}
+                              </p>
 
-                          <h3 className="text-[#39FF14] text-5xl font-black">
-                            {item.bookings}
-                          </h3>
+                            </div>
+
+                            <div className="text-right">
+
+                              <p className="text-gray-500 text-sm uppercase mb-2">
+                                PRICE
+                              </p>
+
+                              <h3 className="text-[#39FF14] text-5xl font-black">
+                                {item.price}
+                              </h3>
+
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap gap-4">
+
+                            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 flex items-center gap-3 text-gray-300">
+
+                              <MdOutlineSportsTennis className="text-[#39FF14]" />
+
+                              {item.players} Players
+
+                            </div>
+
+                            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 flex items-center gap-3 text-gray-300">
+
+                              <FaClock className="text-[#39FF14]" />
+
+                              {item.time}
+
+                            </div>
+
+                          </div>
                         </div>
                       </div>
 
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-4">
+                      {/* ACTIONS */}
+                      <div className="p-8 flex flex-col justify-center gap-5">
 
-                        <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 flex items-center gap-3 text-gray-300">
+                        <button
+                          onClick={() =>
+                            handleEdit(item)
+                          }
+                          className="w-full py-4 rounded-2xl border border-[#39FF14]/30 text-[#39FF14] flex items-center justify-center gap-3 hover:bg-[#39FF14] hover:text-black transition"
+                        >
 
-                          <MdOutlineSportsTennis className="text-[#39FF14]" />
+                          <FaEdit />
 
-                          {item.courts}
-                        </div>
+                          Edit
 
-                        <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 flex items-center gap-3 text-gray-300">
+                        </button>
 
-                          <FaClock className="text-[#39FF14]" />
+                        <button
+                          onClick={() =>
+                            handleDelete(
+                              item._id
+                            )
+                          }
+                          className="w-full py-4 rounded-2xl border border-red-500/40 text-red-500 flex items-center justify-center gap-3 hover:bg-red-500 hover:text-white transition"
+                        >
 
-                          {item.time}
-                        </div>
+                          <FaTrash />
+
+                          Delete
+
+                        </button>
+
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="p-8 flex flex-col justify-center gap-5">
-
-                    <button
-                      className={`w-full py-4 rounded-2xl font-bold transition ${
-                        item.green
-                          ? "bg-[#39FF14]/20 border border-[#39FF14]/30 text-[#39FF14]"
-                          : "bg-[#39FF14] text-black"
-                      }`}
-                    >
-                      {item.button}
-                    </button>
-
-                    <button className="w-full py-4 rounded-2xl border border-[#2A2A2A] text-white flex items-center justify-center gap-3">
-
-                      <FaEdit />
-
-                      Edit
-                    </button>
-
-                    <button className="w-full py-4 rounded-2xl border border-red-500/40 text-red-500 flex items-center justify-center gap-3">
-
-                      <FaTrash />
-
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom Cards */}
-          <div className="grid lg:grid-cols-[1.5fr_.8fr] gap-8">
-
-            {/* Booking Density */}
-            <div className="relative overflow-hidden rounded-[32px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
-
-              {/* Glow */}
-              <div className="absolute -top-20 left-0 w-[220px] h-[220px] bg-[#39FF14]/10 blur-[120px]" />
-
-              <div className="absolute bottom-0 right-0 w-[220px] h-[220px] bg-[#39FF14]/10 blur-[120px]" />
-
-              {/* Header */}
-              <div className="relative z-10 flex items-center justify-between mb-10">
-
-                <div>
-
-                  <h2 className="text-white text-3xl font-black mb-2">
-                    Booking Density
-                  </h2>
-
-                  <p className="text-gray-500 text-sm">
-                    Weekly performance overview
-                  </p>
-                </div>
-
-                <div className="bg-[#39FF14]/10 border border-[#39FF14]/20 text-[#39FF14] px-4 py-2 rounded-full text-sm font-bold">
-                  +24%
-                </div>
-              </div>
-
-              {/* Chart */}
-              <div className="relative z-10">
-
-                {/* Top Numbers */}
-                <div className="flex justify-between text-gray-600 text-xs mb-5 px-1">
-                  <span>100%</span>
-                  <span>80%</span>
-                  <span>60%</span>
-                  <span>40%</span>
-                </div>
-
-                {/* Graph Area */}
-                <div className="relative h-[240px] bg-[#0F0F0F]/70 border border-[#1F2937] rounded-[24px] p-6 overflow-hidden">
-
-                  {/* Grid */}
-                  <div className="absolute inset-0 flex flex-col justify-between p-6">
-
-                    {[1, 2, 3, 4].map((i) => (
-                      <div
-                        key={i}
-                        className="border-t border-[#1F2937]"
-                      />
-                    ))}
-                  </div>
-
-                  {/* Neon Line */}
-                  <svg
-                    viewBox="0 0 600 240"
-                    className="absolute inset-0 w-full h-full"
-                    fill="none"
-                  >
-
-                    <defs>
-                      <linearGradient
-                        id="greenLine"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="0%"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor="#39FF14"
-                        />
-
-                        <stop
-                          offset="100%"
-                          stopColor="#00FFB2"
-                        />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Glow */}
-                    <path
-                      d="M20 180 C100 120, 150 140, 220 80 S350 40, 420 100 S520 180, 580 60"
-                      stroke="url(#greenLine)"
-                      strokeWidth="10"
-                      strokeLinecap="round"
-                      opacity="0.18"
-                    />
-
-                    {/* Main Line */}
-                    <path
-                      d="M20 180 C100 120, 150 140, 220 80 S350 40, 420 100 S520 180, 580 60"
-                      stroke="url(#greenLine)"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                    />
-
-                    {/* Dots */}
-                    {[
-                      [20, 180],
-                      [220, 80],
-                      [420, 100],
-                      [580, 60],
-                    ].map((dot, i) => (
-
-                      <circle
-                        key={i}
-                        cx={dot[0]}
-                        cy={dot[1]}
-                        r="7"
-                        fill="#39FF14"
-                      />
-                    ))}
-                  </svg>
-                </div>
-
-                {/* Days */}
-                <div className="flex justify-between mt-5 text-gray-500 text-sm px-2">
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                  <span>Thu</span>
-                  <span>Fri</span>
-                  <span>Sat</span>
-                  <span>Sun</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Feed */}
-            <div className="relative overflow-hidden rounded-[32px] border border-[#1F2937] bg-gradient-to-br from-[#111111] via-[#171717] to-[#0B0B0B] p-8">
-
-              <div className="absolute top-0 right-0 w-[180px] h-[180px] bg-[#39FF14]/10 blur-[120px]" />
-
-              <h2 className="text-white text-3xl font-black mb-10 relative z-10">
-                Live Feed
-              </h2>
-
-              <div className="space-y-8 relative z-10">
-
-                {[
-                  "New booking at Elite padel",
-                  "Review received: 5 stars",
-                  "Maintenance Alert",
-                  "Payment Settled: $1,240",
-                ].map((item, i) => (
-
-                  <div
-                    key={i}
-                    className="flex gap-4"
-                  >
-
-                    <div className="w-3 h-3 rounded-full bg-[#39FF14] mt-2 shadow-[0_0_10px_#39FF14]" />
-
-                    <div>
-
-                      <h4 className="text-white font-semibold">
-                        {item}
-                      </h4>
-
-                      <p className="text-gray-500 text-sm mt-1">
-                        2 minutes ago
-                      </p>
                     </div>
                   </div>
                 ))}
+
+                {filteredFacilities.length === 0 && (
+
+                  <div className="bg-[#071120] border border-[#11203A] rounded-[35px] p-20 text-center">
+
+                    <h2 className="text-white text-4xl font-black mb-4">
+                      No Facilities Found
+                    </h2>
+
+                    <p className="text-gray-400 text-lg">
+                      No bookings available.
+                    </p>
+
+                  </div>
+                )}
               </div>
-
-              <button className="mt-12 text-[#39FF14] font-bold">
-                View Audit Log →
-              </button>
-            </div>
+            )}
           </div>
-        </div>
-      </section>
 
-      <Footer />
-    </>
+          {/* EDIT MODAL */}
+          {editModal && (
+
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center px-4">
+
+              <div className="w-full max-w-md bg-[#111111] border border-[#39FF14]/20 rounded-[30px] p-8">
+
+                <h2 className="text-3xl font-black text-white mb-8">
+                  Edit Booking
+                </h2>
+
+                <div className="space-y-5">
+
+                  <div>
+
+                    <label className="text-gray-400 text-sm block mb-2">
+                      Players Number
+                    </label>
+
+                    <input
+                      type="number"
+                      value={updatedPlayers}
+                      onChange={(e) =>
+                        setUpdatedPlayers(
+                          e.target.value
+                        )
+                      }
+                      className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl px-5 py-4 text-white outline-none"
+                    />
+
+                  </div>
+
+                  <div>
+
+                    <label className="text-gray-400 text-sm block mb-2">
+                      Time Slot
+                    </label>
+
+                    <input
+                      type="text"
+                      value={updatedTime}
+                      onChange={(e) =>
+                        setUpdatedTime(
+                          e.target.value
+                        )
+                      }
+                      className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl px-5 py-4 text-white outline-none"
+                    />
+
+                  </div>
+                </div>
+
+                <div className="flex gap-4 mt-8">
+
+                  <button
+                    onClick={
+                      handleUpdate
+                    }
+                    className="flex-1 bg-[#39FF14] text-black py-4 rounded-2xl font-bold"
+                  >
+                    Save Changes
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      setEditModal(
+                        false
+                      )
+                    }
+                    className="flex-1 border border-red-500/40 text-red-500 py-4 rounded-2xl font-bold"
+                  >
+                    Cancel
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+
+        <Footer />
+      </>
+
+    </PrivateRoute>
   );
 }
